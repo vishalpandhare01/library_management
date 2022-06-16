@@ -5,38 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS   'book_name','author_name','book_desc'-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>BOOKS, world!</title>
+    <title>Hello, world!</title>
   </head>
   <body>
-
-    <h1>LIBRARY, world!</h1>
-    
     {% if user.is_authenticated %}
-    <center><a type='btn' class='btn btn-secondary' href='/add'>Add New BOOK</a></center><br>
-    <center>hello {{ user.first_name}}</center>
-    
-    <a type='btn' class='btn btn-dark mx-5' href='/LogOut'>LogOut</a>
-    <div class="col m-4">
-    <div class="row">
-    {% for l in li %}
-    <div class="card m-2" style="width: 18rem;">
-        <div class="card-body m-3">
-          <h5 class="card-title">{{ l.book_name }}</h5>
-          <b>{{l.author_name}}</b>
-          <p class="card-text">{{ l.book_desc}}</p>
-          <a href="remove_book/{{ l.id}}" class="btn btn-primary">Remove</a>
-          <a href="Update/{{ l.id}}" class="btn btn-secondary">Update</a>
-        </div>
-    </div>
-    {% endfor %}
+    <br><br>
+    <center>
+      <div class="card" style="width: 20rem;">
+        <div class="card-body">
+    <h1>Update book</h1>
+    <form action="updaterecord/{{ list.id }}" method='POST'>
+        {% csrf_token %}
+        <input class='form-control m-2' type = 'text' placeholder='book_name' value='{{ list.book_name }}'
+        name='book_name'>
+        <input class='form-control m-2' type = 'text' placeholder='author_name' value='{{ list.author_name }}'
+        name='author_name'>
+        <input class='form-control m-2' type = 'text' placeholder='book_desc' value='{{ list.book_desc }}'
+        name='book_desc'
+        ><br>
+        <button class='form-control m-2 btn btn-success' value='submite' >Update book</button>
+    </form>
+  </center>
 </div>
-{% else %}
-<a type='btn' class='btn btn-dark' href='/new_user'>Create_account</a>
-<a type='btn' class='btn btn-dark' href='/LogIn'>LogIn</a>
+</div>
+    {% else %}
+    invalid request..................
 {% endif %}
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

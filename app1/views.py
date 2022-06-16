@@ -1,4 +1,7 @@
+from audioop import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render ,HttpResponse
+from django.template import loader
 from django.contrib.auth import authenticate, login,logout
 from .models import library
 from django.contrib.auth.models import User
@@ -56,4 +59,23 @@ def LogIn(request):
 
 def LogOut(request):
     logout(request)
+    return redirect('/')
+
+def Update(request,id):
+    list = library.objects.get(id=id)
+    template = loader.get_template('update.html')
+    context={
+        'list':list
+    }
+    return HttpResponse(template.render(context,request))
+    
+def updaterecord(request,id):
+    book_name = request.POST.get('book_name')
+    author_name = request.POST.get('author_name')
+    book_desc = request.POST.get('book_desc')
+    book = library.objects.get(id=id)
+    book.book_name=book_name
+    book.book_desc=book_desc
+    book.author_name=author_name
+    book.save()
     return redirect('/')
